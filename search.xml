@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>LazySysAdmin靶场</title>
+      <link href="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/"/>
+      <url>/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/</url>
+      
+        <content type="html"><![CDATA[<h1 id="LazySysAdmin-1"><a href="#LazySysAdmin-1" class="headerlink" title="LazySysAdmin: 1"></a>LazySysAdmin: 1</h1><p>靶场下载地址：<a href="http://www.vulnhub.com/entry/lazysysadmin-1,205/">http://www.vulnhub.com/entry/lazysysadmin-1,205/</a></p><h1 id="一、信息收集"><a href="#一、信息收集" class="headerlink" title="一、信息收集"></a>一、信息收集</h1><p>使用nmap 192.168.103.0&#x2F;24寻找靶机地址和相关信息</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016202317908.png" class="" title="image-20251016202317908"><p>发现有以上端口打开，先查看80端口启动的http服务</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016202431131.png" class="" title="image-20251016202431131"><p>使用dirsearch进行目录扫描寻找漏洞</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016202659922.png" class="" title="image-20251016202659922"><p>发现部分可访问路径逐一访问</p><p>其中重点观察wordpress和phpmyadmin这俩个服务</p><p>由于曾经使用的wordpress搭建的博客经常收到一些人的攻击，了解过一点知识先从woredpress下手</p><h1 id="二、进行测试"><a href="#二、进行测试" class="headerlink" title="二、进行测试"></a>二、进行测试</h1><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016210407952.png" class="" title="image-20251016210407952"><p>在wordpress页面提示name为togie猜测可能是用户名，经过爆破后未成功，再测试phpmyadmin也未成功</p><p>使用ai进行测试，使用的是kali_mcp生成了下方的评估报告</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016210537431.png" class="" title="image-20251016210537431"><h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>还有开启了samba服务进行测试</p><p>使用smbclient &#x2F;&#x2F;192.168.103.14&#x2F;share$连接到服务</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016211508101.png" class="" title="image-20251016211508101"><p>再使用get下载下来数据库配置的文件</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016211640259.png" class="" title="image-20251016211640259"><p>发现数据库账号和密码</p><p>Admin&#x2F;TogieMYSQL12345^^</p><p>var&#x2F;lib&#x2F;mysql-files&#x2F;</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016214526519.png" class="" title="image-20251016214526519"><p>登录wordpress后台上传插件</p><p>内容为</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016214748020.png" class="" title="image-20251016214748020"><p>将其压缩后上传</p><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016214809475.png" class="" title="image-20251016214809475"><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016214715255.png" class="" title="image-20251016214715255"><img src="/2025/10/17/LazySysAdmin%E9%9D%B6%E5%9C%BA/image-20251016214847852.png" class="" title="image-20251016214847852"><p>成功拿到shell</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本靶机考察了samba服务，关键点在于能否获取账号密码。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>buu刷题日记</title>
       <link href="/2025/09/22/buu%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/"/>
       <url>/2025/09/22/buu%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/</url>
