@@ -14,17 +14,25 @@
     const player = new APlayer({
       container,
       fixed: true,
-      autoplay: false,
+      autoplay: true,
       order: 'list',
       loop: 'all',
       preload: 'auto',
       mutex: true,
-      lrcType: 0,
+      lrcType: 3,
       volume: 0.7,
       listFolded: true,
       listMaxHeight: '340px',
       audio: list
     })
+
+    if (player.audio) player.audio.playbackRate = 1
+    if (typeof player.play === 'function') {
+      const playPromise = player.play()
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {})
+      }
+    }
 
     window.globalFixedAPlayer = player
   }
@@ -42,25 +50,9 @@
     }, 200)
   }
 
-  const remountPlayer = () => {
-    const container = document.getElementById(PLAYER_ID)
-    if (!container) return
-
-    if (window.globalFixedAPlayer && typeof window.globalFixedAPlayer.destroy === 'function') {
-      window.globalFixedAPlayer.destroy()
-      window.globalFixedAPlayer = null
-    }
-
-    container.innerHTML = ''
-    container.dataset.aplayerMounted = '0'
-    waitForAPlayer()
-  }
-
   if (document.readyState === 'complete') {
     waitForAPlayer()
   } else {
     window.addEventListener('load', waitForAPlayer, { once: true })
   }
-
-  document.addEventListener('pjax:complete', remountPlayer)
 })()
